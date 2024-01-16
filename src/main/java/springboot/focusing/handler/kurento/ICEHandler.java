@@ -28,7 +28,7 @@ public class ICEHandler implements KurentoHandler {
 
     private IceCandidate makeIceCandidate(JsonObject jsonMessage) {
         JsonObject jsonCandidate = jsonMessage.get("candidate").getAsJsonObject();
-
+        log.info("MAKE ICE CANDIDATE {}", jsonCandidate);
         return new IceCandidate(
                 jsonCandidate.get("candidate").getAsString(),
                 jsonCandidate.get("sdpMid").getAsString(),
