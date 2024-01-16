@@ -15,12 +15,14 @@ import java.util.List;
 public class ExitHandler implements KurentoHandler {
     @Override
     public void process(WebSocketSession session, UserRegistry registry, JsonObject jsonMessage) throws IOException {
-        UserSession user = registry.findBySessionId(session.getId())
+        UserSession user = registry
+                .findBySessionId(session.getId())
                 .orElseThrow(IOException::new);
 
         log.debug("PARTICIPANT {}: exit ", user.getName());
         this.removeParticipant(registry, user.getName());
         user.close();
+        registry.removeBySession(user, session.getId());
     }
 
     @Override
@@ -43,7 +45,7 @@ public class ExitHandler implements KurentoHandler {
                 unnoticedParticipants.add(participant.getName());
             }
         }
-        
+
         if (!unnoticedParticipants.isEmpty()) {
             log.debug("The users {} could not be notified that {} left the room",
                     unnoticedParticipants, name);
