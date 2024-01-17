@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -37,11 +36,11 @@ public class MainHandler extends TextWebSocketHandler {
     }
 
 
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        registry.findBySessionId(session.getId())
-                .ifPresent(userSession -> processExitHandler(session));
-    }
+//    @Override
+//    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+//        registry.findBySessionId(session.getId())
+//                .ifPresent(userSession -> processExitHandler(session));
+//    }
 
     private void processExitHandler(WebSocketSession session) {
         KurentoHandler handler = kurentoHandlerAdapter.findHandlerById("exit");
