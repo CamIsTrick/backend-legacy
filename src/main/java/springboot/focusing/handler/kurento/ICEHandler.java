@@ -23,7 +23,7 @@ public class ICEHandler implements KurentoHandler {
 
     @Override
     public void onError() {
-        //TODO
+        log.error("ICEHandler : Error Occurred");
     }
 
     private IceCandidate makeIceCandidate(JsonObject jsonMessage) {

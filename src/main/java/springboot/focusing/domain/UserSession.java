@@ -100,7 +100,8 @@ public class UserSession implements Closeable {
 
             @Override
             public void onError(Throwable cause) throws Exception {
-                log.warn("PARTICIPANT {}: Could not release incoming EP for {}", UserSession.this.name,
+                log.warn("PARTICIPANT {}: Could not release incoming EP for {}",
+                        UserSession.this.name,
                         senderName);
             }
         });
