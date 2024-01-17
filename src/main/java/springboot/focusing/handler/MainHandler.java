@@ -30,6 +30,7 @@ public class MainHandler extends TextWebSocketHandler {
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         JsonObject jsonMessage = gson.fromJson(message.getPayload(), JsonObject.class);
         String id = jsonMessage.get("id").getAsString();
+        log.info("Receive ID [{}] from {} ", id, session.getId());
 
         KurentoHandler findHandler = kurentoHandlerAdapter.findHandlerById(id);
         processByHandler(session, jsonMessage, findHandler);
