@@ -44,7 +44,18 @@ public class UserSession implements Closeable {
     }
 
     public void connectPeer(WebRtcEndpoint incoming) {
-        this.outgoingMedia.connect(incoming);
+        this.outgoingMedia.connect(incoming, new Continuation<Void>() {
+            @Override
+            public void onSuccess(Void result) throws Exception {
+                log.info("connectPeer Success with name : {}", incoming.getName());
+            }
+
+            @Override
+            public void onError(Throwable cause) throws Exception {
+                log.warn("connectPeer Fail with name : {}", incoming.getName());
+                cause.printStackTrace();
+            }
+        });
     }
 
     public void sendMessage(JsonObject message) throws IOException {
@@ -83,7 +94,7 @@ public class UserSession implements Closeable {
         incoming.release(new Continuation<Void>() {
             @Override
             public void onSuccess(Void result) throws Exception {
-                log.trace("PARTICIPANT {}: Released successfully incoming EP for {}",
+                log.info("PARTICIPANT {}: Released successfully incoming EP for {}",
                         UserSession.this.name, senderName);
             }
 
