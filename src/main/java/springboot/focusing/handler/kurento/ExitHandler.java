@@ -20,9 +20,9 @@ public class ExitHandler implements KurentoHandler {
                 .orElseThrow(IOException::new);
 
         log.debug("PARTICIPANT {}: exit ", user.getName());
+        registry.removeBySession(user, session.getId());
         this.removeParticipant(registry, user.getName());
         user.close();
-        registry.removeBySession(user, session.getId());
     }
 
     @Override
