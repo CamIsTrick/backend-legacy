@@ -26,7 +26,9 @@ public class UserSession implements Closeable {
         this.mediaPipeline = mediaPipeline;
         this.session = session;
         this.name = name;
-        this.outgoingMedia = new WebRtcEndpoint.Builder(mediaPipeline).build();
+        this.outgoingMedia = new WebRtcEndpoint.Builder(mediaPipeline)
+                .useDataChannels()
+                .build();
         this.outgoingMedia.addIceCandidateFoundListener(event -> makeIceJson(event, name));
     }
 
