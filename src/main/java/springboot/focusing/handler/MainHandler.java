@@ -24,8 +24,7 @@ public class MainHandler extends TextWebSocketHandler {
 
     private final KurentoHandlerAdapter kurentoHandlerAdapter;
     private final UserRegistry registry;
-
-
+    
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         JsonObject jsonMessage = gson.fromJson(message.getPayload(), JsonObject.class);

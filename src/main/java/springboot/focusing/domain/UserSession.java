@@ -43,8 +43,12 @@ public class UserSession implements Closeable {
         }
     }
 
-    public void connectPeer(WebRtcEndpoint incoming) {
-        this.outgoingMedia.connect(incoming, new Continuation<Void>() {
+    public WebRtcEndpoint getOutgoingMedia() {
+        return outgoingMedia;
+    }
+
+    public void connectPeer(UserSession sender, WebRtcEndpoint incoming) {
+        sender.getOutgoingMedia().connect(incoming, new Continuation<Void>() {
             @Override
             public void onSuccess(Void result) throws Exception {
                 log.info("connectPeer Success with name : {}", incoming.getName());
@@ -82,14 +86,14 @@ public class UserSession implements Closeable {
         }
 
         log.info("PARTICIPANT {}: obtained endpoint for {}", this.name, sender.getName());
-        sender.connectPeer(incoming);
+        connectPeer(sender, incoming);
         return incoming;
     }
 
     public void cancelVideoFrom(final String senderName) {
         log.debug("PARTICIPANT {}: canceling video reception from {}", this.name, senderName);
         log.debug("PARTICIPANT {}: removing endpoint for {}", this.name, senderName);
-        
+
         final WebRtcEndpoint incoming = incomingMedia.remove(senderName);
         if (incomingMedia.isEmpty()) {
             log.warn("incoming related to {} is not found", senderName);
