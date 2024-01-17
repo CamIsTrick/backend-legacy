@@ -88,9 +88,13 @@ public class UserSession implements Closeable {
 
     public void cancelVideoFrom(final String senderName) {
         log.debug("PARTICIPANT {}: canceling video reception from {}", this.name, senderName);
-        final WebRtcEndpoint incoming = incomingMedia.remove(senderName);
-
         log.debug("PARTICIPANT {}: removing endpoint for {}", this.name, senderName);
+        
+        final WebRtcEndpoint incoming = incomingMedia.remove(senderName);
+        if (incomingMedia.isEmpty()) {
+            log.warn("incoming related to {} is not found", senderName);
+            return;
+        }
         incoming.release(new Continuation<Void>() {
             @Override
             public void onSuccess(Void result) throws Exception {
