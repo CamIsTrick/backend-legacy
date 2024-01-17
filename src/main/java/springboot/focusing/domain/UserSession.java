@@ -37,7 +37,8 @@ public class UserSession implements Closeable {
         } else {
             WebRtcEndpoint webRtc = incomingMedia.get(name);
             if (webRtc != null) {
-                log.info("incoming.addIceCandidate : {} ", name);
+
+                log.info("{} : incoming.addIceCandidate to {} ", this.name, name);
                 webRtc.addIceCandidate(candidate);
             }
         }
