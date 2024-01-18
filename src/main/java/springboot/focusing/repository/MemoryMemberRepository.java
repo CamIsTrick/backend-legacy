@@ -19,7 +19,7 @@ public class MemoryMemberRepository implements MemberRepository{
             throw new DuplicateNicknameException(ErrorCode.DUPLICATE_NICKNAME);
         }
         member.setId(++sequence);
-        store.put(member.getNickName(), member);
+        store.put(member.getNickName().getValue(), member);
         return member;
     }
 

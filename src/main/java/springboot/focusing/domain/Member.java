@@ -2,13 +2,14 @@ package springboot.focusing.domain;
 
 import lombok.Builder;
 import lombok.Data;
+import springboot.focusing.domain.enums.Nickname;
 
 @Data
 @Builder
 public class Member {
 
     private Long id;
-    private String nickName;
+    private Nickname nickName;
     private int x;
     private int y;
     private String refreshToken;
