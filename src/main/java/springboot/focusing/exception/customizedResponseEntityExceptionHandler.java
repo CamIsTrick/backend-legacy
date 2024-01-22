@@ -28,6 +28,10 @@ public class customizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /*
+    auth 파일의 클래스와 같이 직접 생성한 예외(모두 CustomExceptionIfs를 구현)를 다룸
+    원하는 형식으로 지정한 예외가 발생 시 아래 형태로 return
+     */
     @ExceptionHandler({DuplicateNicknameException.class, ExpiredTokenException.class, InvalidImageException.class, NullPointerException.class, UnauthorizedException.class})
     public final ResponseEntity<Object> handleCustomExceptions(CustomExceptionIfs ex, WebRequest request) {
         logger.error("An error occurred", (Throwable) ex);

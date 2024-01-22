@@ -16,11 +16,15 @@ import springboot.focusing.exception.auth.UnauthorizedException;
 
 import java.io.IOException;
 
+/*
+인증이 필요한 경로 설정 및 인증을 위한 클래스
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class JwtAuthorizationFilter implements Filter {
-    private final String[] whiteListUris = new String[]{"/user/join"};
+
+    private final String[] whiteListUris = new String[]{"/user/join"};  //인증이 필요 없는 경로
     private final TokenProvider tokenProvider;
 
     @Override
@@ -28,11 +32,17 @@ public class JwtAuthorizationFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
+        /*
+        인증이 필요 없는 경로로 요청이 서버로 들어왔다면 아래 인증 과정 무시, 즉 접속가능하도록
+         */
         if (whiteListCheck(httpServletRequest.getRequestURI())) {
             chain.doFilter(request, response);
             return;
         }
 
+        /*
+        요청 헤더를 가져와서 토큰이 유효한 지 확인하고 인허, 유효하지 않다면 에러 발생
+         */
         String header = httpServletRequest.getHeader(JwtProperties.HEADER_STRING);
 
         try {

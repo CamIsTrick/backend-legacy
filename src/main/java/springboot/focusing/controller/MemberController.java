@@ -1,11 +1,9 @@
 package springboot.focusing.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +20,10 @@ public class MemberController {
     private final MemberService memberService;
     private final TokenProviderImpl tokenProvider;
 
+    /*
+    사용자 닉네임, 파일이 유효한 지 확인하고,
+    유효하다면 사용자를 등록하고 토큰 발급
+     */
     @PostMapping("/user/join")
     public ResponseEntity join(@RequestParam("memberNickname") String memberNickname, @RequestParam("characterImage") MultipartFile characterImage) {
         MemberLoginDto dto = new MemberLoginDto(memberNickname, characterImage);
@@ -31,6 +33,9 @@ public class MemberController {
         return new ResponseEntity<>(joinResponse.getMemberId(), headers, HttpStatus.OK);
     }
 
+    /*
+    인증(토큰 검증) test
+     */
 //    @GetMapping("/user")
 //    public ResponseEntity test(HttpServletRequest request) {
 //        String token = request.getHeader(JwtProperties.HEADER_STRING);

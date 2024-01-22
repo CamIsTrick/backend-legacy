@@ -18,15 +18,18 @@ public class MemberService {
     private final TokenProvider tokenProvider;
 
     public JoinResponse join(MemberLoginDto dto) {
+        // 닉네임과 파일 검증
         Nickname nickname = new Nickname(dto.getMemberNickname(), memberRepository);
         ImageFile imageFile = new ImageFile(dto.getCharacterImage());
 
+        // 닉네임과 파일이 유효하다면 사용자 등록
         Member member = Member.builder()
                 .nickName(new Nickname(dto.getMemberNickname(), memberRepository))
                 .build();
         member.initializePosition();
         memberRepository.save(member);
 
+        //토큰 발급
         MemberInfoForToken memberInfoForToken = new MemberInfoForToken(member.getNickName().getValue());
         String jwt = tokenProvider.generateAccessToken(memberInfoForToken);
 

@@ -9,7 +9,9 @@ import java.util.*;
 
 @Repository
 public class MemoryMemberRepository implements MemberRepository{
-
+    /*
+    Map 형식으로 사용자 저장
+     */
     private static Map<String, Member> store = new HashMap<>();
     private static long sequence = 0L;
 

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ExceptionResponse {
-    private int errorCode;
+public class ExceptionResponse {    //에러 발생시 리턴할 형식
+    private int errorCode;  // 지정한 에러 코드
     private String message; // 오류 메시지
     private String details; // 오류 상세정보
 }
