@@ -1,5 +1,12 @@
 version: '3.7'
 services:
+  kurento:
+    image: kurento/kurento-media-server:7.0.0
+    volumes:
+      - $HOME/focusing/volume/kurento:/data
+    ports:
+      - "8888:8888"
+      - "8443:8443"
   nginx:
     image: nginx:latest
     command: |
