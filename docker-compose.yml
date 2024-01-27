@@ -12,6 +12,8 @@ services:
     environment:
       - KMS_MIN_PORT=5000
       - KMS_MAX_PORT=5050
+      - KMS_STUN_IP=stun.12connect.com
+      - KMS_STUN_PORT=3478
   nginx:
     image: nginx:latest
     command: |
