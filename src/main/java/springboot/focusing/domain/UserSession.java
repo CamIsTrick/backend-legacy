@@ -83,7 +83,7 @@ public class UserSession implements Closeable {
         WebRtcEndpoint incoming = incomingMedia.get(sender.getName());
         if (incoming == null) {
             log.info("PARTICIPANT {}: creating new endpoint for {}", this.name, sender.getName());
-            incoming = new WebRtcEndpoint.Builder(mediaPipeline).build();
+            incoming = new WebRtcEndpoint.Builder(mediaPipeline).useDataChannels().build();
             incoming.addIceCandidateFoundListener(event -> makeIceJson(event, sender.getName()));
             incomingMedia.put(sender.getName(), incoming);
         }
